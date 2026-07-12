@@ -291,13 +291,24 @@
   <script>
     const background = document.getElementById("background");
 
-    function setRandomBackground() {
-      const randomId = Date.now();
+const forestPhotos = [
+  "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=85",
+  "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1800&q=85",
+  "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1800&q=85",
+  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=85",
+  "https://images.unsplash.com/photo-1425913397330-cf8af2ff40a1?auto=format&fit=crop&w=1800&q=85",
+  "https://images.unsplash.com/photo-1503435980610-a51f3ddfee50?auto=format&fit=crop&w=1800&q=85",
+  "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1800&q=85"
+];
 
-      // Losowe zdjęcie z internetu na podstawie haseł: mushroom, forest.
-      const photoUrl = `https://source.unsplash.com/random/1800x1200/?mushroom,forest&sig=${randomId}`;
+function setRandomBackground() {
+  const photo = forestPhotos[Math.floor(Math.random() * forestPhotos.length)];
+  background.style.backgroundImage = `url("${photo}")`;
 
-      background.style.backgroundImage = `url("${photoUrl}")`;
+
+
+
+
     }
 
     const eventDate = new Date(2026, 8, 20, 8, 0, 0);
