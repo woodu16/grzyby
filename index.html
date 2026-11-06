@@ -26,56 +26,81 @@
             text-align: center;
             overflow: hidden;
             position: relative;
-            /* Głębokie, leśne tło gradientowe */
-            background: linear-gradient(to bottom, #0f1f15, #1b3324, #0f1f15);
+            
+            /* Statyczne tło - prawdziwy las na Kaszubach */
+            background-image: url('https://studiodruku.com.pl');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
 
-        /* Generowanie stałego, leśnego krajobrazu za pomocą CSS */
-        .forest-bg {
+        /* Przyciemniająca nakładka na zdjęcie, aby napisy i kafelki były idealnie czytelne */
+        .overlay {
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.35;
-            background-image: 
-                /* Sylwetki drzew na pierwszym planie */
-                linear-gradient(90deg, transparent 40%, #050a06 40%, #050a06 43%, transparent 43%),
-                linear-gradient(90deg, transparent 15%, #08120a 15%, #08120a 19%, transparent 19%),
-                linear-gradient(90deg, transparent 70%, #060d07 70%, #060d07 75%, transparent 75%),
-                /* Mgła na dole */
-                linear-gradient(to top, rgba(15, 31, 21, 0.9), transparent 50%);
-            background-size: 400px 100%, 300px 100%, 500px 100%, 100% 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
         }
 
-        /* Dodatkowy efekt świetlny (leśna polana) */
-        .forest-light {
+        /* Zawartość strony wyciągnięta nad nakładkę i mgłę */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- EFEKT LEŚNEJ MGŁY --- */
+        .fog-wrapper {
             position: absolute;
-            top: -20%;
-            left: 25%;
-            width: 50%;
-            height: 80%;
-            background: radial-gradient(circle, rgba(163, 230, 53, 0.08) 0%, transparent 70%);
-            z-index: -1;
-            transform: rotate(-15deg);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            overflow: hidden;
+            opacity: 0.35;
+            pointer-events: none;
         }
 
+        .fog-layer {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 90%, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+            filter: blur(25px);
+            animation: moveFog 40s linear infinite;
+        }
+
+        @keyframes moveFog {
+            0% { transform: translateX(0%) translateY(0px); }
+            50% { transform: translateX(-25%) translateY(10px); }
+            100% { transform: translateX(0%) translateY(0px); }
+        }
+
+        /* --- STYLIZACJA ELEMENTÓW --- */
         h1 {
             font-size: 2.8rem;
             margin: 0 0 10px 0;
             color: #a3e635;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.95);
             font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
             font-size: 1.2rem;
             margin-bottom: 40px;
-            color: #cbd5e1;
-            max-width: 600px;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
+            color: #f1f5f9;
+            max-width: 550px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
             line-height: 1.5;
         }
 
@@ -87,14 +112,13 @@
         }
 
         .time-box {
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.8); /* Ciemniejsze tło kafelków dla idealnego kontrastu */
+            backdrop-filter: blur(10px);
             padding: 20px;
-            border-radius: 14px;
+            border-radius: 16px;
             min-width: 95px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(163, 230, 53, 0.2);
-            transition: transform 0.3s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(163, 230, 53, 0.3);
         }
 
         .number {
@@ -103,6 +127,7 @@
             color: #ffffff;
             display: block;
             font-variant-numeric: tabular-nums;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .label {
@@ -110,8 +135,8 @@
             color: #a3e635;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-top: 8px;
-            font-weight: 600;
+            margin-top: 6px;
+            font-weight: 700;
         }
 
         #message {
@@ -120,39 +145,44 @@
             color: #a3e635;
             margin-top: 20px;
             display: none;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
         }
     </style>
 </head>
 <body>
 
-    <!-- Stabilne, leśne elementy tła w CSS -->
-    <div class="forest-bg"></div>
-    <div class="forest-light"></div>
-
-    <h1>Nie zbieromy w niedziela grzybów</h1>
-    <div class="subtitle">Odliczamy do porannego wyjścia do lasu. Koszyki gotowe, nożyki spakowane! 🌲🍄</div>
-
-    <div id="countdown">
-        <div class="time-box">
-            <span class="number" id="days">00</span>
-            <span class="label">Dni</span>
-        </div>
-        <div class="time-box">
-            <span class="number" id="hours">00</span>
-            <span class="label">Godzin</span>
-        </div>
-        <div class="time-box">
-            <span class="number" id="minutes">00</span>
-            <span class="label">Minut</span>
-        </div>
-        <div class="time-box">
-            <span class="number" id="seconds">00</span>
-            <span class="label">Sekund</span>
-        </div>
+    <!-- Filtry wizualne w tle -->
+    <div class="overlay"></div>
+    <div class="fog-wrapper">
+        <div class="fog-layer"></div>
     </div>
 
-    <div id="message">Czas ruszać do lasu! 🪓🧺</div>
+    <!-- Główna zawartość strony -->
+    <div class="content-wrapper">
+        <h1>Nie zbieromy w niedziela grzybów</h1>
+        <div class="subtitle">Odliczamy do porannego wyjścia do lasu. Koszyki gotowe, nożyki spakowane! 🌲🍄</div>
+
+        <div id="countdown">
+            <div class="time-box">
+                <span class="number" id="days">00</span>
+                <span class="label">Dni</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="hours">00</span>
+                <span class="label">Godzin</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="minutes">00</span>
+                <span class="label">Minut</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="seconds">00</span>
+                <span class="label">Sekund</span>
+            </div>
+        </div>
+
+        <div id="message">Czas ruszać do lasu! 🪓🧺</div>
+    </div>
 
     <script>
         // Cel: 12 września 2027, godzina 08:00:00
