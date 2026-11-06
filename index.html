@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Odliczanie do Grzybobrania</title>
+    <title>Nie zbieromy w niedziela grzybów</title>
 
     <!-- Meta Tagi Open Graph dla ładnego podglądu na WhatsApp -->
-    <meta property="og:title" content="Odliczanie do Grzybobrania!" />
+    <meta property="og:title" content="Nie zbieromy w niedziela grzybów" />
     <meta property="og:description" content="Koszyki gotowe, nożyki spakowane? Sprawdź, ile czasu zostało do porannego wyjścia do lasu!" />
-    <meta property="og:image" content="https://github.io" /> <!-- Możesz zmienić na własny obrazek -->
+    <meta property="og:image" content="https://unsplash.com" />
     <meta property="og:url" content="https://github.io" />
     <meta property="og:type" content="website" />
 
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2e4a3b, #15231a);
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -26,19 +25,51 @@
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Stylizacja tła i pokazu slajdów */
+        .bg-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 1.5s ease-in-out;
+            opacity: 0;
+        }
+
+        .bg-slider.active {
+            opacity: 1;
+        }
+
+        /* Przyciemniająca nakładka, aby napisy były czytelne */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: -1;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 10px;
             color: #a3e635;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
         }
 
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 40px;
-            color: #cbd5e1;
+            color: #e2e8f0;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
         }
 
         #countdown {
@@ -49,12 +80,12 @@
         }
 
         .time-box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
             padding: 20px;
             border-radius: 12px;
             min-width: 90px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -67,24 +98,33 @@
 
         .label {
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: #cbd5e1;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 5px;
         }
 
         #message {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: #a3e635;
             margin-top: 20px;
             display: none;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
         }
     </style>
 </head>
 <body>
 
-    <h1>Leśna wyprawa</h1>
+    <!-- Kontenery na zmieniające się zdjęcia tła -->
+    <div class="bg-slider active" style="background-image: url('https://unsplash.com');"></div>
+    <div class="bg-slider" style="background-image: url('https://unsplash.com');"></div>
+    <div class="bg-slider" style="background-image: url('https://unsplash.com');"></div>
+    <div class="bg-slider" style="background-image: url('https://unsplash.com');"></div>
+    
+    <div class="overlay"></div>
+
+    <h1>Nie zbieromy w niedziela grzybów</h1>
     <div class="subtitle">Odliczamy do porannego wyjścia do lasu. Koszyki gotowe, nożyki spakowane! 🌲🍄</div>
 
     <div id="countdown">
@@ -109,26 +149,37 @@
     <div id="message">Czas ruszać do lasu! 🪓🧺</div>
 
     <script>
-        // Ustawienie docelowej daty: 12 września 2027, godzina 08:00:00
+        // --- Skrypt zmieniającego się tła (pokaz slajdów) ---
+        const slides = document.querySelectorAll('.bg-slider');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        // Zmiana zdjęcia co 7000 ms (7 sekund)
+        setInterval(nextSlide, 7000);
+
+
+        // --- Skrypt odliczania ---
+        // Cel: 12 września 2027, godzina 08:00:00
         const targetDate = new Date("September 12, 2027 08:00:00").getTime();
 
         const timer = setInterval(function() {
             const now = new Date().getTime();
             const difference = targetDate - now;
 
-            // Obliczenia dla dni, godzin, minut i sekund
             const days = Math.floor(difference / (1000 * 60 * 60 * 24));
             const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-            // Wyświetlanie wyników z dodaniem zera z przodu (np. "05" zamiast "5")
             document.getElementById("days").innerText = days < 10 ? "0" + days : days;
             document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
             document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
             document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
 
-            // Gdy odliczanie dobiegnie końca
             if (difference < 0) {
                 clearInterval(timer);
                 document.getElementById("countdown").style.display = "none";
