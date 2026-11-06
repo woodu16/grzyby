@@ -8,6 +8,7 @@
     <!-- Meta Tagi Open Graph dla ładnego podglądu na WhatsApp -->
     <meta property="og:title" content="Nie zbieromy w niedziela grzybów" />
     <meta property="og:description" content="Koszyki gotowe, nożyki spakowane? Sprawdź, ile czasu zostało do porannego wyjścia do lasu!" />
+    <meta property="og:image" content="tlo.jpg" />
     <meta property="og:url" content="https://github.io" />
     <meta property="og:type" content="website" />
 
@@ -27,15 +28,16 @@
             overflow: hidden;
             position: relative;
             
-            /* Statyczne tło - prawdziwy las na Kaszubach */
-            background-image: url('https://studiodruku.com.pl');
+            /* Lokalne zdjęcie wgrane do tego samego folderu */
+            background-image: url('tlo.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            background-color: #0d1a11; /* Kolor rezerwowy zanim załaduje się zdjęcie */
         }
 
-        /* Przyciemniająca nakładka na zdjęcie, aby napisy i kafelki były idealnie czytelne */
+        /* Przyciemniająca nakładka na zdjęcie dla czytelności tekstów */
         .overlay {
             position: absolute;
             top: 0;
@@ -46,7 +48,7 @@
             z-index: 1;
         }
 
-        /* Zawartość strony wyciągnięta nad nakładkę i mgłę */
+        /* Zawartość strony nad nakładką i mgłą */
         .content-wrapper {
             position: relative;
             z-index: 10;
@@ -112,7 +114,7 @@
         }
 
         .time-box {
-            background: rgba(0, 0, 0, 0.8); /* Ciemniejsze tło kafelków dla idealnego kontrastu */
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 16px;
