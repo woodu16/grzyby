@@ -8,7 +8,6 @@
     <!-- Meta Tagi Open Graph dla ładnego podglądu na WhatsApp -->
     <meta property="og:title" content="Nie zbieromy w niedziela grzybów" />
     <meta property="og:description" content="Koszyki gotowe, nożyki spakowane? Sprawdź, ile czasu zostało do porannego wyjścia do lasu!" />
-    <meta property="og:image" content="https://unsplash.com" />
     <meta property="og:url" content="https://github.io" />
     <meta property="og:type" content="website" />
 
@@ -27,49 +26,57 @@
             text-align: center;
             overflow: hidden;
             position: relative;
+            /* Głębokie, leśne tło gradientowe */
+            background: linear-gradient(to bottom, #0f1f15, #1b3324, #0f1f15);
         }
 
-        /* Stylizacja tła i pokazu slajdów */
-        .bg-slider {
+        /* Generowanie stałego, leśnego krajobrazu za pomocą CSS */
+        .forest-bg {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
-            background-size: cover;
-            background-position: center;
-            transition: opacity 1.5s ease-in-out;
-            opacity: 0;
-        }
-
-        .bg-slider.active {
-            opacity: 1;
-        }
-
-        /* Przyciemniająca nakładka, aby napisy były czytelne */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.55);
             z-index: -1;
+            pointer-events: none;
+            opacity: 0.35;
+            background-image: 
+                /* Sylwetki drzew na pierwszym planie */
+                linear-gradient(90deg, transparent 40%, #050a06 40%, #050a06 43%, transparent 43%),
+                linear-gradient(90deg, transparent 15%, #08120a 15%, #08120a 19%, transparent 19%),
+                linear-gradient(90deg, transparent 70%, #060d07 70%, #060d07 75%, transparent 75%),
+                /* Mgła na dole */
+                linear-gradient(to top, rgba(15, 31, 21, 0.9), transparent 50%);
+            background-size: 400px 100%, 300px 100%, 500px 100%, 100% 100%;
+        }
+
+        /* Dodatkowy efekt świetlny (leśna polana) */
+        .forest-light {
+            position: absolute;
+            top: -20%;
+            left: 25%;
+            width: 50%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(163, 230, 53, 0.08) 0%, transparent 70%);
+            z-index: -1;
+            transform: rotate(-15deg);
         }
 
         h1 {
             font-size: 2.8rem;
-            margin-bottom: 10px;
+            margin: 0 0 10px 0;
             color: #a3e635;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+            font-weight: 800;
         }
 
         .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 40px;
-            color: #e2e8f0;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+            color: #cbd5e1;
+            max-width: 600px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
+            line-height: 1.5;
         }
 
         #countdown {
@@ -80,28 +87,31 @@
         }
 
         .time-box {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
             padding: 20px;
-            border-radius: 12px;
-            min-width: 90px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            min-width: 95px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(163, 230, 53, 0.2);
+            transition: transform 0.3s ease;
         }
 
         .number {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: bold;
             color: #ffffff;
             display: block;
+            font-variant-numeric: tabular-nums;
         }
 
         .label {
-            font-size: 0.9rem;
-            color: #cbd5e1;
+            font-size: 0.85rem;
+            color: #a3e635;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
+            letter-spacing: 1.5px;
+            margin-top: 8px;
+            font-weight: 600;
         }
 
         #message {
@@ -116,13 +126,9 @@
 </head>
 <body>
 
-    <!-- Kontenery na zmieniające się zdjęcia tła -->
-    <div class="bg-slider active" style="background-image: url('https://unsplash.com');"></div>
-    <div class="bg-slider" style="background-image: url('https://unsplash.com');"></div>
-    <div class="bg-slider" style="background-image: url('https://unsplash.com');"></div>
-    <div class="bg-slider" style="background-image: url('https://unsplash.com');"></div>
-    
-    <div class="overlay"></div>
+    <!-- Stabilne, leśne elementy tła w CSS -->
+    <div class="forest-bg"></div>
+    <div class="forest-light"></div>
 
     <h1>Nie zbieromy w niedziela grzybów</h1>
     <div class="subtitle">Odliczamy do porannego wyjścia do lasu. Koszyki gotowe, nożyki spakowane! 🌲🍄</div>
@@ -149,20 +155,6 @@
     <div id="message">Czas ruszać do lasu! 🪓🧺</div>
 
     <script>
-        // --- Skrypt zmieniającego się tła (pokaz slajdów) ---
-        const slides = document.querySelectorAll('.bg-slider');
-        let currentSlide = 0;
-
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-        // Zmiana zdjęcia co 7000 ms (7 sekund)
-        setInterval(nextSlide, 7000);
-
-
-        // --- Skrypt odliczania ---
         // Cel: 12 września 2027, godzina 08:00:00
         const targetDate = new Date("September 12, 2027 08:00:00").getTime();
 
@@ -187,6 +179,5 @@
             }
         }, 1000);
     </script>
-
 </body>
 </html>
