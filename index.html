@@ -1,215 +1,318 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nie zbieromy w niedziela grzybów</title>
-
-    <!-- Meta Tagi Open Graph dla ładnego podglądu na WhatsApp -->
-    <meta property="og:title" content="Nie zbieromy w niedziela grzybów" />
-    <meta property="og:description" content="Koszyki gotowe, nożyki spakowane? Sprawdź, ile czasu zostało do porannego wyjścia do lasu!" />
-    <meta property="og:image" content="tlo.jpg" />
-    <meta property="og:url" content="https://github.io" />
-    <meta property="og:type" content="website" />
-
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
-            overflow: hidden;
-            position: relative;
-            
-            /* Lokalne zdjęcie wgrane do tego samego folderu */
-            background-image: url('tlo.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-color: #0d1a11; /* Kolor rezerwowy zanim załaduje się zdjęcie */
-        }
-
-        /* Przyciemniająca nakładka na zdjęcie dla czytelności tekstów */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-
-        /* Zawartość strony nad nakładką i mgłą */
-        .content-wrapper {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* --- EFEKT LEŚNEJ MGŁY --- */
-        .fog-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            overflow: hidden;
-            opacity: 0.35;
-            pointer-events: none;
-        }
-
-        .fog-layer {
-            position: absolute;
-            bottom: -50px;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            background: radial-gradient(ellipse at 50% 90%, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
-            filter: blur(25px);
-            animation: moveFog 40s linear infinite;
-        }
-
-        @keyframes moveFog {
-            0% { transform: translateX(0%) translateY(0px); }
-            50% { transform: translateX(-25%) translateY(10px); }
-            100% { transform: translateX(0%) translateY(0px); }
-        }
-
-        /* --- STYLIZACJA ELEMENTÓW --- */
-        h1 {
-            font-size: 2.8rem;
-            margin: 0 0 10px 0;
-            color: #a3e635;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.95);
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: #f1f5f9;
-            max-width: 550px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
-            line-height: 1.5;
-        }
-
-        #countdown {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .time-box {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 16px;
-            min-width: 95px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(163, 230, 53, 0.3);
-        }
-
-        .number {
-            font-size: 3.2rem;
-            font-weight: bold;
-            color: #ffffff;
-            display: block;
-            font-variant-numeric: tabular-nums;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .label {
-            font-size: 0.85rem;
-            color: #a3e635;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-top: 6px;
-            font-weight: 700;
-        }
-
-        #message {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #a3e635;
-            margin-top: 20px;
-            display: none;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b15">
+  <meta name="description" content="Nie zbieromy w niedziela grzybów! Odliczamy do porannego wyjścia do lasu. Koszyki gotowe, nożyki spakowane!">
+  <title>Nie zbieromy w niedziela grzybów 🍄</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #101b15;
+      --forest-2: #17271d;
+      --moss: #78916c;
+      --cream: #f4f0e5;
+      --gold: #d6b879;
+      --muted: #c1c9bd;
+      --line: rgba(239,235,218,.15);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--cream); background: var(--forest);
+      font-family: "DM Sans", system-ui, sans-serif; overflow-x: hidden;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: -3;
+      background:
+        linear-gradient(180deg, rgba(8,17,12,.48) 0%, rgba(8,17,12,.65) 48%, #101b15 100%),
+        url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2400&q=88") center 42% / cover no-repeat;
+      transform: scale(1.025);
+    }
+    body::after {
+      content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 25%, transparent 0%, rgba(5,12,8,.12) 42%, rgba(5,12,8,.72) 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .page { width: min(1120px, calc(100% - 40px)); margin: auto; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; padding:26px 0; gap:20px; }
+    .brand { display:flex; align-items:center; gap:12px; color:#f5f0e4; font-size:13px; letter-spacing:.17em; text-transform:uppercase; font-weight:700; }
+    .brand-mark { display:grid; place-items:center; width:42px; height:42px; border:1px solid rgba(214,184,121,.55); border-radius:50%; color:var(--gold); font-size:21px; background:rgba(12,25,17,.5); }
+    .top-actions { display:flex; align-items:center; gap:10px; }
+    .sound-button {
+      display:flex; align-items:center; gap:9px; border:1px solid rgba(244,240,229,.25);
+      color:var(--cream); background:rgba(10,20,14,.45); border-radius:999px;
+      padding:11px 16px; font:600 12px "DM Sans",sans-serif; letter-spacing:.06em;
+      cursor:pointer; transition:.25s ease; backdrop-filter:blur(12px);
+    }
+    .sound-button:hover { border-color:var(--gold); background:rgba(214,184,121,.12); transform:translateY(-2px); }
+    .sound-icon { font-size:16px; }
+    .hero { min-height: min(760px, calc(100svh - 90px)); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:65px 0 100px; position:relative; }
+    .eyebrow { display:inline-flex; align-items:center; gap:10px; color:#e0c991; text-transform:uppercase; letter-spacing:.24em; font-size:11px; font-weight:700; margin-bottom:24px; }
+    .eyebrow::before,.eyebrow::after { content:""; width:34px; height:1px; background:rgba(214,184,121,.65); }
+    h1 { font-family:"Playfair Display", Georgia, serif; font-size:clamp(42px,7.5vw,88px); line-height:.99; letter-spacing:-.045em; max-width:1000px; margin:0; font-weight:700; text-shadow:0 6px 35px rgba(0,0,0,.35); }
+    h1 span { display:block; color:var(--gold); font-style:italic; }
+    .subtitle { color:#e1e5dc; font-size:clamp(14px,2vw,18px); line-height:1.7; max-width:550px; margin:26px auto 0; }
+    .countdown-wrap { width:min(760px,100%); margin:54px auto 0; }
+    .countdown-label { color:#d8dfd4; text-transform:uppercase; letter-spacing:.2em; font-size:10px; font-weight:700; margin-bottom:17px; }
+    .countdown { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .time-card {
+      padding:22px 10px 18px; border:1px solid rgba(239,235,218,.2); border-radius:15px;
+      background:linear-gradient(145deg,rgba(26,46,33,.78),rgba(9,20,13,.68));
+      box-shadow:0 18px 45px rgba(0,0,0,.18); backdrop-filter:blur(13px);
+    }
+    .time-number { display:block; font-variant-numeric:tabular-nums; font-size:clamp(35px,6vw,58px); line-height:1; font-weight:600; letter-spacing:-.06em; color:#fff9e9; }
+    .time-name { display:block; margin-top:12px; color:#c7d0c3; text-transform:uppercase; letter-spacing:.16em; font-size:9px; font-weight:700; }
+    .next-date { color:#d5c69e; font-size:12px; margin-top:18px; letter-spacing:.04em; }
+    .cta {
+      display:inline-flex; align-items:center; justify-content:center; gap:11px; margin-top:35px;
+      padding:15px 24px; border-radius:999px; color:#1a251b; background:var(--gold);
+      font-size:11px; letter-spacing:.13em; font-weight:800; text-transform:uppercase;
+      box-shadow:0 10px 35px rgba(0,0,0,.2); transition:transform .25s, box-shadow .25s;
+    }
+    .cta:hover { transform:translateY(-3px); box-shadow:0 16px 38px rgba(0,0,0,.32); }
+    .scroll-note { position:absolute; bottom:28px; color:rgba(239,235,218,.55); font-size:9px; letter-spacing:.2em; text-transform:uppercase; display:flex; align-items:center; gap:10px; }
+    .scroll-note::before { content:""; height:28px; width:1px; background:rgba(214,184,121,.6); }
+    .details { padding:30px 0 80px; }
+    .detail-panel {
+      border:1px solid var(--line); border-radius:22px; padding:34px 38px;
+      background:linear-gradient(135deg,rgba(24,42,30,.88),rgba(13,27,18,.88));
+      display:grid; grid-template-columns:1fr auto; align-items:center; gap:25px;
+      box-shadow:0 25px 70px rgba(0,0,0,.2);
+    }
+    .detail-kicker { color:var(--gold); text-transform:uppercase; font-size:10px; font-weight:700; letter-spacing:.2em; margin-bottom:10px; }
+    .detail-panel h2 { font:700 clamp(24px,3vw,34px) "Playfair Display",Georgia,serif; margin:0 0 9px; }
+    .detail-panel p { color:var(--muted); font-size:13px; line-height:1.7; margin:0; max-width:620px; }
+    .basket { font-size:55px; filter:drop-shadow(0 8px 15px rgba(0,0,0,.3)); animation:bob 4s ease-in-out infinite; }
+    footer { border-top:1px solid var(--line); padding:22px 0 30px; color:rgba(226,231,220,.55); font-size:10px; letter-spacing:.1em; text-align:center; text-transform:uppercase; }
+    .firefly { position:fixed; width:4px; height:4px; border-radius:50%; background:#e6d39a; box-shadow:0 0 12px 3px rgba(230,211,154,.5); opacity:0; pointer-events:none; z-index:-1; animation:firefly 8s ease-in-out infinite; }
+    .firefly:nth-child(1) { left:12%; top:62%; animation-delay:0s; }
+    .firefly:nth-child(2) { left:82%; top:34%; animation-delay:2s; }
+    .firefly:nth-child(3) { left:72%; top:75%; animation-delay:4s; }
+    .firefly:nth-child(4) { left:25%; top:28%; animation-delay:6s; }
+    @keyframes firefly { 0%,100%{opacity:0;transform:translate(0,0)} 25%,65%{opacity:.8} 50%{transform:translate(18px,-25px)} }
+    @keyframes bob { 0%,100%{transform:translateY(0) rotate(-3deg)} 50%{transform:translateY(-8px) rotate(3deg)} }
+    @media (max-width:650px) {
+      .page { width:min(100% - 30px, 520px); }
+      .topbar { padding:18px 0; }
+      .brand { font-size:10px; letter-spacing:.12em; gap:8px; }
+      .brand-mark { width:36px;height:36px; }
+      .sound-button { padding:10px 12px; font-size:10px; }
+      .hero { min-height:calc(100svh - 70px); padding:55px 0 85px; }
+      .eyebrow { font-size:9px; letter-spacing:.16em; margin-bottom:20px; }
+      .countdown-wrap { margin-top:40px; }
+      .countdown { gap:7px; }
+      .time-card { padding:18px 4px 15px; border-radius:11px; }
+      .time-number { font-size:clamp(29px,9vw,43px); }
+      .time-name { font-size:8px; letter-spacing:.1em; }
+      .detail-panel { grid-template-columns:1fr; padding:26px 23px; }
+      .basket { display:none; }
+      .scroll-note { bottom:18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { scroll-behavior:auto !important; animation:none !important; transition:none !important; }
+    }
+  </style>
 </head>
 <body>
-
-    <!-- Filtry wizualne w tle -->
-    <div class="overlay"></div>
-    <div class="fog-wrapper">
-        <div class="fog-layer"></div>
+  <span class="firefly"></span><span class="firefly"></span><span class="firefly"></span><span class="firefly"></span>
+  <header class="page topbar">
+    <a class="brand" href="#" aria-label="Strona główna">
+      <span class="brand-mark">🍄</span><span>Leśna wyprawa<br>Ekipa grzybiarzy</span>
+    </a>
+    <div class="top-actions">
+      <button class="sound-button" id="soundToggle" type="button" aria-pressed="false">
+        <span class="sound-icon" id="soundIcon">♫</span><span id="soundLabel">Włącz dźwięki lasu</span>
+      </button>
     </div>
+  </header>
 
-    <!-- Główna zawartość strony -->
-    <div class="content-wrapper">
-        <h1>Nie zbieromy w niedziela grzybów</h1>
-        <div class="subtitle">Odliczamy do porannego wyjścia do lasu. Koszyki gotowe, nożyki spakowane! 🌲🍄</div>
+  <main>
+    <section class="page hero">
+      <div class="eyebrow">Tradycja • natura • dobry humor</div>
+      <h1>Nie zbieromy<br><span>w niedziela</span> grzybów!</h1>
+      <p class="subtitle">Koszyki gotowe, nożyki spakowane. Las już czeka, a najlepsze borowiki nie znajdą się same. 🌲</p>
 
-        <div id="countdown">
-            <div class="time-box">
-                <span class="number" id="days">00</span>
-                <span class="label">Dni</span>
-            </div>
-            <div class="time-box">
-                <span class="number" id="hours">00</span>
-                <span class="label">Godzin</span>
-            </div>
-            <div class="time-box">
-                <span class="number" id="minutes">00</span>
-                <span class="label">Minut</span>
-            </div>
-            <div class="time-box">
-                <span class="number" id="seconds">00</span>
-                <span class="label">Sekund</span>
-            </div>
+      <div class="countdown-wrap" aria-live="off">
+        <div class="countdown-label">Do następnego porannego wyjścia zostało</div>
+        <div class="countdown">
+          <div class="time-card"><span class="time-number" id="days">00</span><span class="time-name">Dni</span></div>
+          <div class="time-card"><span class="time-number" id="hours">00</span><span class="time-name">Godzin</span></div>
+          <div class="time-card"><span class="time-number" id="minutes">00</span><span class="time-name">Minut</span></div>
+          <div class="time-card"><span class="time-number" id="seconds">00</span><span class="time-name">Sekund</span></div>
         </div>
+        <div class="next-date" id="nextDate">Najbliższa wyprawa: niedziela, godz. 7:00</div>
+      </div>
 
-        <div id="message">Czas ruszać do lasu! 🪓🧺</div>
-    </div>
+      <a class="cta" href="#wyprawa"><span>🍃</span> Czas ruszać do lasu <span>→</span></a>
+      <div class="scroll-note">Zejdź niżej</div>
+    </section>
 
-    <script>
-        // Cel: 12 września 2027, godzina 08:00:00
-        const targetDate = new Date("September 12, 2027 08:00:00").getTime();
+    <section class="page details" id="wyprawa">
+      <div class="detail-panel">
+        <div>
+          <div class="detail-kicker">Leśny kodeks wyprawy</div>
+          <h2>Spokój w lesie. Oczy szeroko otwarte.</h2>
+          <p>Idziemy po świeże powietrze, dobre towarzystwo i oczywiście po grzyby. Zostawiamy las w takim stanie, w jakim chcielibyśmy go zastać następnym razem. A jak trafi się prawdziwek — wiadomo, humor od razu lepszy!</p>
+        </div>
+        <div class="basket" aria-hidden="true">🧺</div>
+      </div>
+    </section>
+  </main>
 
-        const timer = setInterval(function() {
-            const now = new Date().getTime();
-            const difference = targetDate - now;
+  <footer class="page">Koszyki gotowe • Nożyki spakowane • Borowiki, nadchodzimy 🍄</footer>
 
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+  <script>
+    // Godzina rozpoczęcia wyprawy. Zmień 7 na inną godzinę, jeśli trzeba.
+    const TARGET_HOUR = 7;
+    const TARGET_MINUTE = 0;
 
-            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+    const pad = value => String(value).padStart(2, "0");
+    const days = ["niedziela","poniedziałek","wtorek","środa","czwartek","piątek","sobota"];
 
-            if (difference < 0) {
-                clearInterval(timer);
-                document.getElementById("countdown").style.display = "none";
-                document.getElementById("message").style.display = "block";
-            }
+    function getNextTrip() {
+      const now = new Date();
+      const target = new Date(now);
+      let daysUntilSunday = (7 - now.getDay()) % 7;
+      target.setDate(now.getDate() + daysUntilSunday);
+      target.setHours(TARGET_HOUR, TARGET_MINUTE, 0, 0);
+      if (target <= now) target.setDate(target.getDate() + 7);
+      return target;
+    }
+
+    let nextTrip = getNextTrip();
+    const dateFormatter = new Intl.DateTimeFormat("pl-PL", {
+      weekday:"long", day:"numeric", month:"long", hour:"2-digit", minute:"2-digit"
+    });
+
+    function updateCountdown() {
+      const now = new Date();
+      if (nextTrip <= now) nextTrip = getNextTrip();
+      const totalSeconds = Math.max(0, Math.floor((nextTrip - now) / 1000));
+      const d = Math.floor(totalSeconds / 86400);
+      const h = Math.floor((totalSeconds % 86400) / 3600);
+      const m = Math.floor((totalSeconds % 3600) / 60);
+      const s = totalSeconds % 60;
+      document.getElementById("days").textContent = pad(d);
+      document.getElementById("hours").textContent = pad(h);
+      document.getElementById("minutes").textContent = pad(m);
+      document.getElementById("seconds").textContent = pad(s);
+      document.getElementById("nextDate").textContent =
+        "Najbliższa wyprawa: " + dateFormatter.format(nextTrip) + " (czasu lokalnego)";
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Leśne tło dźwiękowe generowane lokalnie przez przeglądarkę:
+    // delikatny szum wiatru i krótkie, syntetyczne trele ptaków.
+    let audioContext = null;
+    let masterGain = null;
+    let windSource = null;
+    let birdTimer = null;
+    let soundEnabled = false;
+
+    function playBirdSong() {
+      if (!audioContext || !soundEnabled) return;
+      const start = audioContext.currentTime;
+      const chirps = 2 + Math.floor(Math.random() * 3);
+      for (let i = 0; i < chirps; i++) {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        const t = start + i * (0.16 + Math.random() * 0.12);
+        const base = 1900 + Math.random() * 900;
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(base, t);
+        osc.frequency.exponentialRampToValueAtTime(base * (1.2 + Math.random() * 0.35), t + 0.09);
+        osc.frequency.exponentialRampToValueAtTime(base * 0.82, t + 0.2);
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.linearRampToValueAtTime(0.045, t + 0.025);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.23);
+        osc.connect(gain); gain.connect(masterGain);
+        osc.start(t); osc.stop(t + 0.25);
+      }
+    }
+
+    async function startForestSound() {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) {
+        document.getElementById("soundLabel").textContent = "Dźwięk niedostępny";
+        return;
+      }
+      audioContext = audioContext || new AudioCtx();
+      await audioContext.resume();
+      masterGain = audioContext.createGain();
+      masterGain.gain.value = 0.0001;
+      masterGain.connect(audioContext.destination);
+
+      const bufferSize = 2 * audioContext.sampleRate;
+      const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+      const data = buffer.getChannelData(0);
+      let last = 0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        last = (last + 0.018 * white) / 1.018;
+        data[i] = last * 3.5;
+      }
+      windSource = audioContext.createBufferSource();
+      windSource.buffer = buffer;
+      windSource.loop = true;
+      const windFilter = audioContext.createBiquadFilter();
+      windFilter.type = "lowpass";
+      windFilter.frequency.value = 520;
+      const windGain = audioContext.createGain();
+      windGain.gain.value = 0.48;
+      windSource.connect(windFilter);
+      windFilter.connect(windGain);
+      windGain.connect(masterGain);
+      windSource.start();
+
+      masterGain.gain.cancelScheduledValues(audioContext.currentTime);
+      masterGain.gain.setTargetAtTime(0.22, audioContext.currentTime, 0.8);
+      soundEnabled = true;
+      playBirdSong();
+      birdTimer = setInterval(() => {
+        if (soundEnabled && Math.random() > 0.18) playBirdSong();
+      }, 3600);
+      updateSoundButton();
+    }
+
+    function stopForestSound() {
+      soundEnabled = false;
+      if (birdTimer) clearInterval(birdTimer);
+      birdTimer = null;
+      if (masterGain && audioContext) {
+        masterGain.gain.setTargetAtTime(0.0001, audioContext.currentTime, 0.25);
+        setTimeout(() => {
+          if (!soundEnabled && windSource) {
+            try { windSource.stop(); } catch(e) {}
+            windSource = null;
+          }
         }, 1000);
-    </script>
+      }
+      updateSoundButton();
+    }
+
+    function updateSoundButton() {
+      const button = document.getElementById("soundToggle");
+      button.setAttribute("aria-pressed", String(soundEnabled));
+      document.getElementById("soundIcon").textContent = soundEnabled ? "♫" : "♪";
+      document.getElementById("soundLabel").textContent = soundEnabled ? "Wycisz las" : "Włącz dźwięki lasu";
+    }
+
+    document.getElementById("soundToggle").addEventListener("click", async () => {
+      if (soundEnabled) stopForestSound();
+      else {
+        try { await startForestSound(); }
+        catch (error) {
+          console.error("Nie udało się uruchomić dźwięku:", error);
+          document.getElementById("soundLabel").textContent = "Dźwięk niedostępny";
+        }
+      }
+    });
+  </script>
 </body>
 </html>
